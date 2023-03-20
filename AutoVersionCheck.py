@@ -23,3 +23,4 @@ with open(csv_filepath, "w", newline="") as csvfile:
             writer.writerow([item[0], item[1]])
     except:
         pass
+
