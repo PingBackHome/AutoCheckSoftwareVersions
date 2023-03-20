@@ -1,7 +1,17 @@
 import csv
+import os
 import subprocess
 
-with open("software_versions.csv", "w", newline="") as csvfile:
+# Get the path to the current user's desktop
+desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+
+# Set the name of the output CSV file
+csv_filename = "software_versions.csv"
+
+# Set the full path of the output CSV file
+csv_filepath = os.path.join(desktop_path, csv_filename)
+
+with open(csv_filepath, "w", newline="") as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["Software", "Version"])
 
