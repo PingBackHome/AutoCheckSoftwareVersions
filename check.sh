@@ -17,11 +17,11 @@ echo -e "SoftLibChecker v1.01\n
          PingBackHome(c)\n
          -------------------------------------\n\n
          Start time: $START_TIME\n
-         End time: $(date)\n
          IPv4 address: $IPV4_ADDRESS\n
          Hostname: $HOSTNAME\n
          Package managers in use: $PKG_MANAGERS\n
          Installed items found: $INSTALLED_ITEMS\n
-         Available updates found: NUM_AVAILABLE_UPDATES
-         List of available out-of-date software:\n
-         $AVAILABLE_UPDATES" > "$REPORT_FILE"
+         Available updates found: $NUM_AVAILABLE_UPDATES" > "$REPORT_FILE"
+
+echo -e "\nList of available updates:" >> "$REPORT_FILE"
+column -t <<< "$AVAILABLE_UPDATES" >> "$REPORT_FILE"
