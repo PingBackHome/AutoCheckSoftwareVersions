@@ -24,17 +24,17 @@ echo -e "SoftLibChecker v1.01\n
          Available updates found: $NUM_AVAILABLE_UPDATES" > "$REPORT_FILE"
 
 # Create table header
-
-printf "+--------------------------+---------------+\n"
-printf "|      Package Name        |  Version      |\n"
-printf "+--------------------------+---------------+\n"
+printf "+--------------------------+---------------+\n" >> "$REPORT_FILE"
+printf "|      Package Name        |  Version      |\n" >> "$REPORT_FILE"
+printf "+--------------------------+---------------+\n" >> "$REPORT_FILE"
 
 # Loop through available updates and add rows to the table
 while read -r line; do
     name=$(echo "$line" | awk -F/ '{print $1}')
     version=$(echo "$line" | awk -F/ '{print $2}')
-    printf "| %-24s| %-14s|\n" "$name" "$version"
+    printf "| %-24s| %-14s|\n" "$name" "$version" >> "$REPORT_FILE"
 done <<< "$AVAILABLE_UPDATES"
 
 # Add a row separator
 printf "+--------------------------+---------------+\n" >> "$REPORT_FILE"
+
