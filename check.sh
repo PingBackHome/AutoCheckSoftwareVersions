@@ -24,25 +24,28 @@ echo -e "SoftLibChecker v1.01\n
          Available updates found: $NUM_AVAILABLE_UPDATES" > "$REPORT_FILE"
 
 # Get the longest item in the table
-max_length=0
+max_pkg_length=0
+max_ver_length=0
 while read -r line; do
     name=$(echo "$line" | awk -F/ '{print $1}')
+    if [[ ${#name} -gt $max_pkg_length ]]; then
+        max_pkg_length=${#name}
+    fi
     version=$(echo "$line" | awk -F/ '{print $2}')
-    row_length=$(( ${#name} + ${#version} + 3 )) # 3 is for the two '|' characters and the space in between
-    if [[ $row_length -gt $max_length ]]; then
-        max_length=$row_length
+    if [[ ${#version} -gt $max_ver_length ]]; then
+        max_ver_length=${#version}
     fi
 done <<< "$AVAILABLE_UPDATES"
 
 # Create table header
-printf "+%s+\n" "$(printf '%*s' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
-printf "| %-$(($max_length+1))s|\n" "Package Name | Version" >> "$REPORT_FILE"
-printf "+%s+\n" "$(printf '%*s' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
+printf "+-%*s-+-%*s-+\n" "$((max_pkg_length+2))" "" "$((max_ver_length+2))" "" >> "$REPORT_FILE"
+printf "| %-$(($max_pkg_length+2))s| %-$(($max_ver_length+2))s|\n" "Package Name" "Version" >> "$REPORT_FILE"
+printf "+-%*s-+-%*s-+\n" "$((max_pkg_length+2))" "" "$((max_ver_length+2))" "" >> "$REPORT_FILE"
 
 # Loop through available updates and add rows to the table
 while read -r line; do
     name=$(echo "$line" | awk -F/ '{print $1}')
     version=$(echo "$line" | awk -F/ '{print $2}')
-    printf "| %-$((${#name}+1))s| %-$((${#version}+1))s|\n" "$name" "$version" >> "$REPORT_FILE"
-    printf "+%s+\n" "$(printf '%*s' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
+    printf "| %-$(($max_pkg_length+2))s| %-$(($max_ver_length+2))s|\n" "$name" "$version" >> "$REPORT_FILE"
+    printf "+-%*s-+-%*s-+\n" "$((max_pkg_length+2))" "" "$((max_ver_length+2))" "" >> "$REPORT_FILE"
 done <<< "$AVAILABLE_UPDATES"
