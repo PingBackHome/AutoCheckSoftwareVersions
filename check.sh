@@ -9,12 +9,20 @@ IPV4_ADDRESS=$(hostname -I | awk '{print $1}')
 HOSTNAME=$(hostname)
 PKG_MANAGERS=$(command -v apt-get >/dev/null 2>&1 && echo "apt-get") # add other package managers as needed
 INSTALLED_ITEMS=$(dpkg-query -f '${binary:Package}\n' -W | wc -l)
+NUM_AVAILABLE_UPDATES=$(echo "$AVAILABLE_UPDATES" | grep -c /)
+AVAILABLE_UPDATES=$(apt list --upgradable 2>/dev/null)
 
 # Create CSV file and write header
 REPORT_FILE="${DESKTOP_PATH}/software_report_$(date +%Y-%m-%d_%H-%M-%S).csv"
-echo -e "Start time: $START_TIME\n\n 
-         End time: $(date)\n\n
-         IPv4 address: $IPV4_ADDRESS\n\n
-         Hostname: $HOSTNAME\n\n
-         Package managers in use: $PKG_MANAGERS\n\n
-         Installed items found: $INSTALLED_ITEMS" > "$REPORT_FILE"
+echo -e "SoftLibChecker v1.01\n
+         PingBackHome(c)\n
+         -------------------------------------\n\n
+         Start time: $START_TIME\n
+         End time: $(date)\n
+         IPv4 address: $IPV4_ADDRESS\n
+         Hostname: $HOSTNAME\n
+         Package managers in use: $PKG_MANAGERS\n
+         Installed items found: $INSTALLED_ITEMS\n
+         Available updates found: NUM_AVAILABLE_UPDATES
+         List of available out-of-date software:\n
+         $AVAILABLE_UPDATES" > "$REPORT_FILE"
