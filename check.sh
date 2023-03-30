@@ -12,7 +12,9 @@ INSTALLED_ITEMS=$(dpkg-query -f '${binary:Package}\n' -W | wc -l)
 
 # Create CSV file and write header
 REPORT_FILE="${DESKTOP_PATH}/software_report_$(date +%Y-%m-%d_%H-%M-%S).csv"
-echo -e "Start time: $START_TIME,End time: $END_TIME,IPv4 address,Hostname,Package managers in use,Installed items found" > "$REPORT_FILE"
-
-# Write system information to CSV file
-echo "$START_TIME,$(date),$IPV4_ADDRESS,$HOSTNAME,$PKG_MANAGERS,$INSTALLED_ITEMS" >> "$REPORT_FILE"
+echo -e "Start time: $START_TIME\n\n 
+         End time: $(date)\n\n
+         IPv4 address: $IPV4_ADDRESS\n\n
+         Hostname: $HOSTNAME\n\n
+         Package managers in use: $PKG_MANAGERS\n\n
+         Installed items found: $INSTALLED_ITEMS" > "$REPORT_FILE"
