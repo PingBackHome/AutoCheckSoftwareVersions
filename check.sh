@@ -14,7 +14,7 @@ NUM_AVAILABLE_UPDATES=$(echo "$AVAILABLE_UPDATES" | wc -l)
 # Create CSV file and write header
 REPORT_FILE="${DESKTOP_PATH}/software_report_$(date +%Y-%m-%d_%H-%M-%S).csv"
 echo -e "SoftLibChecker v1.01\n
-         PingBackHome(c)\n
+         PingBackHome 2023(c)\n
          -------------------------------------\n\n
          Start time: $START_TIME\n
          IPv4 address: $IPV4_ADDRESS\n
