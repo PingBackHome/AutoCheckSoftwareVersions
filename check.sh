@@ -21,7 +21,8 @@ echo -e "SoftLibChecker v1.01\n
          Hostname: $HOSTNAME\n
          Package managers in use: $PKG_MANAGERS\n
          Installed items found: $INSTALLED_ITEMS\n
-         Available updates found: $NUM_AVAILABLE_UPDATES" > "$REPORT_FILE"
+         Available updates found: $NUM_AVAILABLE_UPDATES
+         ----------------++++++---------------\n\n" > "$REPORT_FILE"
 
 # Get the longest item in the table
 max_name_length=0
