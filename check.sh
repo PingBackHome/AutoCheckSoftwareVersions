@@ -9,9 +9,8 @@ IPV4_ADDRESS=$(hostname -I | awk '{print $1}')
 HOSTNAME=$(hostname)
 PKG_MANAGERS=$(command -v apt-get >/dev/null 2>&1 && echo "apt-get") # add other package managers as needed
 INSTALLED_ITEMS=$(dpkg-query -f '${binary:Package}\n' -W | wc -l)
-AVAILABLE_UPDATES=$(apt list --upgradable 2>/dev/null)
-NUM_AVAILABLE_UPDATES=$(echo "$AVAILABLE_UPDATES" | grep -c /)
-
+AVAILABLE_UPDATES=$(apt list --upgradable 2>/dev/null | grep -v "Listing..." | awk '{print $1, $2}')
+NUM_AVAILABLE_UPDATES=$(echo "$AVAILABLE_UPDATES" | wc -l)
 # Create CSV file and write header
 REPORT_FILE="${DESKTOP_PATH}/software_report_$(date +%Y-%m-%d_%H-%M-%S).csv"
 echo -e "SoftLibChecker v1.01\n
