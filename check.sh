@@ -50,3 +50,31 @@ while read -r line; do
     printf "| %-$(($max_name_length+1))s| %-$(($max_version_length+1))s|\n" "$name" "$version" >> "$REPORT_FILE"
     printf "+%s+-%s+\n" "$(printf '%*s\n' "$((max_name_length + 2))" "" | tr ' ' '-')" "$(printf '%*s\n' "$((max_version_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
 done <<< "$AVAILABLE_UPDATES"
+
+# Print table in terminal
+cat "$REPORT_FILE"
+
+# Ask user if they want to update and upgrade
+read -p "Do you want to update and upgrade the software? (yes/no): " answer
+
+# Update and upgrade if user said yes
+if [ "$answer" == "yes" ]; then
+    # Update and upgrade software
+    echo "Updating and upgrading software..."
+    sudo apt-get update && sudo apt-get upgrade -y
+
+    # Check if update and upgrade were successful
+    if [ $? -eq 0 ]; then
+        status="success"
+    else
+        status="failure"
+    fi
+
+    # Append note to report file
+    echo "User response: $answer; Update and upgrade status: $status" >> "$REPORT_FILE"
+
+    echo "Software update and upgrade complete."
+else
+    echo "No updates were performed."
+fi
+
