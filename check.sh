@@ -24,4 +24,4 @@ echo -e "SoftLibChecker v1.01\n
          Available updates found: $NUM_AVAILABLE_UPDATES" > "$REPORT_FILE"
 
 echo -e "\nList of available updates:" >> "$REPORT_FILE"
-column -t <<< "$AVAILABLE_UPDATES" >> "$REPORT_FILE"
+column -t <<< "$AVAILABLE_UPDATES" | awk 'BEGIN { FS="\t"; OFS=" | " } { print "|", $1, "|", $2, "|" }' >> "$REPORT_FILE"
