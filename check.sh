@@ -27,20 +27,22 @@ echo -e "SoftLibChecker v1.01\n
 max_length=0
 while read -r line; do
     name=$(echo "$line" | awk -F/ '{print $1}')
-    if [[ ${#name} -gt $max_length ]]; then
-        max_length=${#name}
+    version=$(echo "$line" | awk -F/ '{print $2}')
+    row_length=$(( ${#name} + ${#version} + 3 )) # 3 is for the two '|' characters and the space in between
+    if [[ $row_length -gt $max_length ]]; then
+        max_length=$row_length
     fi
 done <<< "$AVAILABLE_UPDATES"
 
 # Create table header
-printf "+%s+---------------+\n" "$(printf '%*s\n' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
-printf "| %-$(($max_length+1))s| %-14s|\n" "Package Name" "Version" >> "$REPORT_FILE"
-printf "+%s+---------------+\n" "$(printf '%*s\n' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
+printf "+%s+\n" "$(printf '%*s' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
+printf "| %-$(($max_length+1))s|\n" "Package Name | Version" >> "$REPORT_FILE"
+printf "+%s+\n" "$(printf '%*s' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
 
 # Loop through available updates and add rows to the table
 while read -r line; do
     name=$(echo "$line" | awk -F/ '{print $1}')
     version=$(echo "$line" | awk -F/ '{print $2}')
-    printf "| %-$(($max_length+1))s| %-14s|\n" "$name" "$version" >> "$REPORT_FILE"
-    printf "+%s+---------------+\n" "$(printf '%*s\n' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
+    printf "| %-$((${#name}+1))s| %-$((${#version}+1))s|\n" "$name" "$version" >> "$REPORT_FILE"
+    printf "+%s+\n" "$(printf '%*s' "$((max_length + 2))" "" | tr ' ' '-')" >> "$REPORT_FILE"
 done <<< "$AVAILABLE_UPDATES"
