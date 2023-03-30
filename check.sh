@@ -71,7 +71,7 @@ if [ "$answer" == "yes" ]; then
     fi
 
     # Append note to report file
-    echo "User response: $answer; Update and upgrade status: $status" >> "$REPORT_FILE"
+    echo -e "User response: $answer;\n Update and upgrade status: $status" >> "$REPORT_FILE"
 
     echo "Software update and upgrade complete."
 else
