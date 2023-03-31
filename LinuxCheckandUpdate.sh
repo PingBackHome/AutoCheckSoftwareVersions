@@ -13,7 +13,7 @@ AVAILABLE_UPDATES=$(apt list --upgradable 2>/dev/null | grep -v "Listing..." | a
 NUM_AVAILABLE_UPDATES=$(echo "$AVAILABLE_UPDATES" | wc -l)
 # Create CSV file and write header
 REPORT_FILE="${DESKTOP_PATH}/software_report_$(date +%Y-%m-%d_%H-%M-%S).csv"
-echo -e "SoftLibCheckUpdate v1.01\n
+echo -e "LinuxCheck&Update v1.01\n
          PingBackHome 2023(c)\n
          +-----------------------------------+\n
          Start time: $START_TIME\n
