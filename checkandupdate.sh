@@ -13,16 +13,16 @@ AVAILABLE_UPDATES=$(apt list --upgradable 2>/dev/null | grep -v "Listing..." | a
 NUM_AVAILABLE_UPDATES=$(echo "$AVAILABLE_UPDATES" | wc -l)
 # Create CSV file and write header
 REPORT_FILE="${DESKTOP_PATH}/software_report_$(date +%Y-%m-%d_%H-%M-%S).csv"
-echo -e "SoftLibChecker v1.01\n
+echo -e "SoftLibCheckUpdate v1.01\n
          PingBackHome 2023(c)\n
-         -------------------------------------\n\n
+         +-----------------------------------+\n
          Start time: $START_TIME\n
          IPv4 address: $IPV4_ADDRESS\n
          Hostname: $HOSTNAME\n
          Package managers in use: $PKG_MANAGERS\n
          Installed items found: $INSTALLED_ITEMS\n
          Available updates found: $NUM_AVAILABLE_UPDATES
-         ----------------++++++---------------\n\n" > "$REPORT_FILE"
+         +-----------------------------------+\n\n" > "$REPORT_FILE"
 
 # Get the longest item in the table
 max_name_length=0
